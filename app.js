@@ -7,6 +7,8 @@ servidor = http.createServer((req, res) => {
     switch(method) {
         case 'GET':
             return manejarSolicitudGET(req, res)
+        case 'POST':
+            return manejarSolicitudPOST(req, res)
         default:
             console.log(`El método ${method}, no puede ser manejado por el Servidor`)
     }
@@ -28,12 +30,20 @@ function manejarSolicitudGET(req, res) {
         res.statusCode = 404
         res.end('El recurso solicitado no existe')
     }
+}
 
+function manejarSolicitudPOST(req, res) {
+    const path = req.url
+
+    if (path === '/cursos/programacion') {
+        res.statusCode = 200
+        res.end('El servidor recibió una solicitud POST para /cursos/programacion')
+    }
 }
 
 const PUERTO = 3000
 
 servidor.listen(PUERTO, () => {
-    console.log(`Servidor escuchando en el ${PUERTO} `)
+    console.log(`Servidor escuchando en el puerto ${PUERTO} `)
 })
 
